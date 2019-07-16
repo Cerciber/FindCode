@@ -1,0 +1,78 @@
+CREATE TABLE IF NOT EXISTS TUsuarios (
+
+    iD varchar(50) PRIMARY KEY NOT NULL,
+    nickname varchar(30) NOT NULL,
+    nombre varchar(30) NOT NULL,
+    password varchar(50) NOT NULL
+
+);
+
+CREATE TABLE IF NOT EXISTS TLenguaje (
+
+    iD varchar(30) PRIMARY KEY NOT NULL
+
+);
+
+CREATE TABLE IF NOT EXISTS TFichas (
+
+    iD int NOT NULL AUTO_INCREMENT, 
+    titulo varchar(100) NOT NULL,
+    descripcion text NOT NULL,
+    ejemplo text NOT NULL,
+    iDUsuario varchar(50) NOT NULL,
+    iDLenguaje varchar(30) NOT NULL,
+    PRIMARY KEY (iD),
+    FOREIGN KEY (iDLenguaje) REFERENCES TLenguaje(iD) ON DELETE CASCADE,
+    FOREIGN KEY (iDUsuario) REFERENCES TUsuarios(iD) ON DELETE CASCADE
+
+);
+
+CREATE TABLE IF NOT EXISTS TCalificacion (
+
+    iD int NOT NULL AUTO_INCREMENT,
+    calificacion int NOT NULL,
+    iDFicha int NOT NULL,
+    iDUsuario varchar(50) NOT NULL,
+    PRIMARY KEY (iD),
+    FOREIGN KEY (iDFicha) REFERENCES TFichas(iD) ON DELETE CASCADE,
+    FOREIGN KEY (iDUsuario) REFERENCES TUsuarios(iD) ON DELETE CASCADE
+
+);
+
+CREATE TABLE IF NOT EXISTS TComentarios (
+
+    iD INT NOT NULL AUTO_INCREMENT,
+    mensaje TEXT NOT NULL,
+    iDUsuario varchar(50) NOT NULL,
+    iDFicha INT NOT NULL,
+    PRIMARY KEY (iD),
+    FOREIGN KEY (iDUsuario) REFERENCES TUsuarios(iD) ON DELETE CASCADE,
+    FOREIGN KEY (iDFicha) REFERENCES TFichas(iD) ON DELETE CASCADE
+
+);
+
+CREATE TABLE IF NOT EXISTS TIngrediente (
+
+    iD int NOT NULL AUTO_INCREMENT,
+    titulo varchar(100) NOT NULL,
+    descripcion varchar(255) NOT NULL,
+    posInicial INT NOT NULL,
+    posFinal INT NOT NULL,
+    iDFicha INT NOT NULL,
+    PRIMARY KEY (iD),
+    FOREIGN KEY (iDFicha) REFERENCES TFichas(iD) ON DELETE CASCADE
+
+);
+
+CREATE TABLE IF NOT EXISTS TPalabraReservada (
+
+    iD int NOT NULL AUTO_INCREMENT,
+    nombre varchar(20),
+    iDLenguaje varchar(30) NOT NULL,
+    PRIMARY KEY (iD),
+    FOREIGN KEY (iDLenguaje) REFERENCES TLenguaje(iD) ON DELETE CASCADE
+
+)
+
+
+
